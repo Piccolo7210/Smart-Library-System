@@ -1,0 +1,12 @@
+Run Nginx with your custom config:
+sudo nginx -c /home/mustakim/Desktop/IIT/Phase2/nginx.conf
+
+To reload after changes
+nginx -s reload -c /home/mustakim/Desktop/IIT/Phase2/nginx.conf
+
+To stop Nginx when needed:
+
+sudo nginx -s stop -c /home/mustakim/Desktop/IIT/Phase2/nginx.conf
+
+To verify the config before running:
+sudo nginx -t -c /home/mustakim/Desktop/IIT/Phase2/nginx.conf
