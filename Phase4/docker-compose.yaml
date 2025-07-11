@@ -1,0 +1,58 @@
+services:
+  user-service:
+    build: ./user-service
+    container_name: user-service
+    ports:
+      - "3001:3001"
+    environment:
+      - MONGODB_URI=${USER_MONGODB_URI}
+      - PORT=3001
+      - LOAN_SERVICE_URL={LOAN_SERVICE_URL}
+    networks:
+      - library-network
+    restart: unless-stopped
+
+  book-service:
+    build: ./book-service
+    container_name: book-service
+    ports:
+      - "3002:3002"
+    environment:
+      - MONGODB_URI=${BOOK_MONGODB_URI}
+      - PORT=3002
+    networks:
+      - library-network
+    restart: unless-stopped
+
+  loan-service:
+    build: ./loan-service
+    container_name: loan-service
+    ports:
+      - "3003:3003"
+    environment:
+      - MONGO_URI=${LOAN_MONGODB_URI}
+      - PORT=3003
+      - BOOK_SERVICE_URL=${BOOK_SERVICE_URL}
+      - USER_SERVICE_URL=${USER_SERVICE_URL}
+    networks:
+      - library-network
+    depends_on:
+      - user-service
+      - book-service
+    restart: unless-stopped
+
+  nginx-gateway:
+    build: ./ngnix
+    container_name: nginx-config
+    ports:
+      - "8080:8080"
+    networks:
+      - library-network
+    depends_on:
+      - user-service
+      - book-service
+      - loan-service
+
+networks:
+  library-network:
+    driver: bridge

@@ -1,4 +1,4 @@
-# Smart Library System - Phase 3 (Microservices with NGINX)
+# Smart Library System - Phase 4 (Microservices with NGINX)
 
 This phase extends the microservices architecture by introducing an NGINX reverse proxy for unified API access, load balancing, and centralized logging. The system consists of three Node.js microservices (Book, User, Loan) and an NGINX gateway.
 
