@@ -5,7 +5,7 @@
 
 echo "🛑 Stopping Smart Library System containers..."
 echo "=============================================="
-
+sudo systemctl stop nginx
 # Stop all smart-library containers
 containers=$(docker ps -q --filter "name=smart-library")
 

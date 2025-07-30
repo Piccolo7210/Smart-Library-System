@@ -49,17 +49,36 @@ async function checkBookAvailability(bookId) {
 async function updateBookAvailability(bookId, operation) {
     try {
         const book = await getBookDetails(bookId);
+        // let updatedBook;
+        // const updatedBook = {  
+        //             borrowCount: operation === 'decrement' ? (book.borrowCount || 0) + 1 : book.borrowCount-1
+        //          };
+        // // if(book.available_copies >0) {
+        // //     if (operation === 'decrement') {
+        // //         updatedBook = book.a - 1;
+        // //     } else if (operation === 'increment') {
+        // //         updatedBook = book.available_copies + 1;
+        // //     } else {
+        // //         throw new Error('Invalid operation');
+        // //     }
+        // // }
         
-        const updatedBook = {  
-                    borrowCount: operation === 'decrement' ? (book.borrowCount || 0) + 1 : book.borrowCount-1
-                 };
+        // const updateBorroCount= await fetch(`${BOOK_SERVICE_URL}/${bookId}`,{
+        //     method: 'PUT',
+        //     headers: {'Content-Type': 'application/json'},
+        //     body: JSON.stringify({borrowCount: updatedBook})
+        // });
+         const newBorrowCount = operation === 'decrement' ? 
+            (book.borrowCount || 0) + 1 : 
+            Math.max((book.borrowCount || 0) - 1, 0);
         
-        const updateBorroCount= await fetch(`${BOOK_SERVICE_URL}/${bookId}`,{
+        // Update borrow count
+        const updateBorrowCountResponse = await fetch(`${BOOK_SERVICE_URL}/${bookId}`, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({updatedBook})
+            body: JSON.stringify({ borrowCount: newBorrowCount }) // Fixed: send the number directly
         });
-        if (!updateBorroCount.ok) {
+        if (!updateBorrowCountResponse.ok) {
             const errorBorrowCount= await updateBorroCount.json();
             if (updateBorroCount.status === 404) {
                 throw new Error('Book not found');

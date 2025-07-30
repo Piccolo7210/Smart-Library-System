@@ -12,14 +12,14 @@ if [ ! -f "docker-compose.yaml" ]; then
 fi
 
 # Stop the containers
-docker-compose stop
+docker compose stop
 
 # Check if docker-compose command was successful
 if [ $? -eq 0 ]; then
     echo "✅ All containers stopped successfully!"
     echo
     echo "📊 Container status:"
-    docker-compose ps
+    docker compose ps
 else
     echo "❌ Failed to stop containers!"
     exit 1

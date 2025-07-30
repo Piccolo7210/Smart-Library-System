@@ -21,7 +21,7 @@ if [ ! -f "docker-compose.yaml" ]; then
 fi
 
 # Bring down the containers
-docker-compose down
+docker compose down
 
 # Check if docker-compose command was successful
 if [ $? -eq 0 ]; then

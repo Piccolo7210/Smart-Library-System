@@ -5,9 +5,9 @@ services:
     ports:
       - "3001:3001"
     environment:
-      - MONGODB_URI=${USER_MONGODB_URI}
+      - MONGODB_URI=mongodb+srv://bsse1405:kodZR14XNlhr0MD6@cluster0.txmylhj.mongodb.net/
       - PORT=3001
-      - LOAN_SERVICE_URL={LOAN_SERVICE_URL}
+      - LOAN_SERVICE_URL=http://loan-service:3003/api/loans
     networks:
       - library-network
     restart: unless-stopped
@@ -18,7 +18,7 @@ services:
     ports:
       - "3002:3002"
     environment:
-      - MONGODB_URI=${BOOK_MONGODB_URI}
+      - MONGODB_URI=mongodb+srv://bsse1405:AC08nfisABbCZpv7@cluster0.bgndrmx.mongodb.net/
       - PORT=3002
     networks:
       - library-network
@@ -30,10 +30,10 @@ services:
     ports:
       - "3003:3003"
     environment:
-      - MONGO_URI=${LOAN_MONGODB_URI}
+      - MONGO_URI=mongodb+srv://bsse1405:FVxPorbJclmVWCMl@cluster0.zze23wl.mongodb.net/
       - PORT=3003
-      - BOOK_SERVICE_URL=${BOOK_SERVICE_URL}
-      - USER_SERVICE_URL=${USER_SERVICE_URL}
+      - BOOK_SERVICE_URL=http://book-service:3002/api/books
+      - USER_SERVICE_URL=http://user-service:3001/api/users
     networks:
       - library-network
     depends_on:
@@ -42,7 +42,7 @@ services:
     restart: unless-stopped
 
   nginx-gateway:
-    build: ./ngnix
+    build: ./nginx
     container_name: nginx-config
     ports:
       - "8080:8080"
